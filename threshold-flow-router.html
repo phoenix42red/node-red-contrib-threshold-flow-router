@@ -1,54 +1,4 @@
 <script type="text/javascript">
-RED.nodes.registerType('stable-range',{
-    category: 'function',
-    color: '#c0deed',
-    defaults: {
-        name: {value:""},
-
-        property: {value:"payload", required:true},
-        propertyType: {value:"msg"},
-
-        upper: {value:"10", required:true},
-        upperType: {value:"num"},
-
-        lower: {value:"0", required:true},
-        lowerType: {value:"num"},
-
-        hysteresis: {value:0},
-        minDuration: {value:0},
-
-        softStart: {value:true},
-        debug: {value:false},
-        alwaysPass: {value:false}
-    },
-    inputs:1,
-    outputs:3,
-    outputLabels:["HIGH","MID","LOW"],
-    icon:"font-awesome/fa-sliders",
-    label: function() {
-        return this.name || "Stable Range";
-    },
-    oneditprepare: function() {
-
-        $("#node-input-property").typedInput({
-            default: "msg",
-            types: ["msg","flow","global"],
-            typeField: "#node-input-propertyType"
-        });
-
-        $("#node-input-upper").typedInput({
-            default: "num",
-            types: ["num","msg","flow","global"],
-            typeField: "#node-input-upperType"
-        });
-
-        $("#node-input-lower").typedInput({
-            default: "num",
-            types: ["num","msg","flow","global"],
-            typeField: "#node-input-lowerType"
-        });
-    }
-});<script type="text/javascript">
 RED.nodes.registerType('threshold-flow-router',{
     category: 'function',
     color: '#c0deed',
@@ -101,59 +51,6 @@ RED.nodes.registerType('threshold-flow-router',{
 </script>
 
 <script type="text/html" data-template-name="threshold-flow-router">
-
-    <div class="form-row">
-        <label>Name</label>
-        <input type="text" id="node-input-name">
-    </div>
-
-    <div class="form-row">
-        <label>Wert</label>
-        <input type="text" id="node-input-property">
-        <input type="hidden" id="node-input-propertyType">
-    </div>
-
-    <div class="form-row">
-        <label>Obere Grenze</label>
-        <input type="text" id="node-input-upper">
-        <input type="hidden" id="node-input-upperType">
-    </div>
-
-    <div class="form-row">
-        <label>Untere Grenze</label>
-        <input type="text" id="node-input-lower">
-        <input type="hidden" id="node-input-lowerType">
-    </div>
-
-    <div class="form-row">
-        <label>Hysterese</label>
-        <input type="number" id="node-input-hysteresis">
-    </div>
-
-    <div class="form-row">
-        <label>Mindestverweildauer (ms)</label>
-        <input type="number" id="node-input-minDuration">
-    </div>
-
-    <div class="form-row">
-        <input type="checkbox" id="node-input-softStart">
-        <label for="node-input-softStart">Soft-Start</label>
-    </div>
-
-    <div class="form-row">
-        <input type="checkbox" id="node-input-debug">
-        <label for="node-input-debug">Debug aktivieren</label>
-    </div>
-
-    <div class="form-row">
-        <input type="checkbox" id="node-input-alwaysPass">
-        <label for="node-input-alwaysPass">Nachricht immer durchreichen</label>
-    </div>
-
-</script>
-</script>
-
-<script type="text/html" data-template-name="stable-range">
 
     <div class="form-row">
         <label>Name</label>
