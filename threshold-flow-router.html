@@ -26,34 +26,21 @@ RED.nodes.registerType('threshold-flow-router',{
     label: function() { return this.name || "threshold-flow-router"; },
 
     oneditprepare: function() {
-        // typedInputs
+        // typedInputs für Property / Upper / Lower
         $("#node-input-property").typedInput({default:"msg", types:["msg","flow","global"], typeField:"#node-input-propertyType"});
         $("#node-input-upper").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-upperType"});
         $("#node-input-lower").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-lowerType"});
 
-        // Farben über typedInput Dropdown
-        const colors = [
-            {value:"#00AA00", label:"Grün"},
-            {value:"#FFCC00", label:"Gelb"},
-            {value:"#FF0000", label:"Rot"},
-            {value:"#0000FF", label:"Blau"},
-            {value:"#AAAAAA", label:"Grau"}
-        ];
-
-        function initColor(id, val) {
-            $("#"+id).typedInput({default: val, types: colors.map(c=>c.value), typeField:"#"+id+"Type"});
-            $("#"+id).typedInput("value", val);
-        }
-
-        initColor("node-input-colorHigh", this.colorHigh);
-        initColor("node-input-colorMid", this.colorMid);
-        initColor("node-input-colorLow", this.colorLow);
+        // Farben setzen
+        if(this.colorHigh) $("#node-input-colorHigh").val(this.colorHigh);
+        if(this.colorMid)  $("#node-input-colorMid").val(this.colorMid);
+        if(this.colorLow)  $("#node-input-colorLow").val(this.colorLow);
     },
 
     oneditsave: function() {
-        this.colorHigh = $("#node-input-colorHigh").typedInput("value");
-        this.colorMid = $("#node-input-colorMid").typedInput("value");
-        this.colorLow = $("#node-input-colorLow").typedInput("value");
+        this.colorHigh = $("#node-input-colorHigh").val();
+        this.colorMid  = $("#node-input-colorMid").val();
+        this.colorLow  = $("#node-input-colorLow").val();
     }
 });
 </script>
@@ -110,20 +97,35 @@ RED.nodes.registerType('threshold-flow-router',{
 
 <div class="form-row">
     <label>Farbe HIGH</label>
-    <input type="text" id="node-input-colorHigh">
-    <input type="hidden" id="node-input-colorHighType">
+    <select id="node-input-colorHigh">
+        <option value="#00AA00">Grün</option>
+        <option value="#FFCC00">Gelb</option>
+        <option value="#FF0000">Rot</option>
+        <option value="#0000FF">Blau</option>
+        <option value="#AAAAAA">Grau</option>
+    </select>
 </div>
 
 <div class="form-row">
     <label>Farbe MID</label>
-    <input type="text" id="node-input-colorMid">
-    <input type="hidden" id="node-input-colorMidType">
+    <select id="node-input-colorMid">
+        <option value="#00AA00">Grün</option>
+        <option value="#FFCC00">Gelb</option>
+        <option value="#FF0000">Rot</option>
+        <option value="#0000FF">Blau</option>
+        <option value="#AAAAAA">Grau</option>
+    </select>
 </div>
 
 <div class="form-row">
     <label>Farbe LOW</label>
-    <input type="text" id="node-input-colorLow">
-    <input type="hidden" id="node-input-colorLowType">
+    <select id="node-input-colorLow">
+        <option value="#00AA00">Grün</option>
+        <option value="#FFCC00">Gelb</option>
+        <option value="#FF0000">Rot</option>
+        <option value="#0000FF">Blau</option>
+        <option value="#AAAAAA">Grau</option>
+    </select>
 </div>
 
 </script>

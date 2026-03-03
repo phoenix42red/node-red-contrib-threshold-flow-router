@@ -4,7 +4,7 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         const node = this;
 
-        // ===== Konfiguration =====
+        // Konfiguration
         node.property = config.property;
         node.propertyType = config.propertyType;
 
@@ -61,8 +61,8 @@ module.exports = function(RED) {
 
             let outputs = [null, null, null];
             if (node.state === "HIGH") outputs[0] = msg;
-            if (node.state === "MID") outputs[1] = msg;
-            if (node.state === "LOW") outputs[2] = msg;
+            if (node.state === "MID")  outputs[1] = msg;
+            if (node.state === "LOW")  outputs[2] = msg;
 
             if (node.alwaysPass && !outputs[1]) outputs[1] = msg;
 
@@ -83,7 +83,6 @@ module.exports = function(RED) {
 
         // ===== Input =====
         node.on("input", function(msg) {
-
             if (msg.reset === true) {
                 node.state = null;
                 context.set("state", null);
