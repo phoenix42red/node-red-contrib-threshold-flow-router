@@ -21,10 +21,10 @@ module.exports = function(RED) {
         node.debug = config.debug;
         node.alwaysPass = config.alwaysPass;
 
-        // Farben aus Dropdown
-        node.colorHigh = config.colorHigh || "#00AA00";
-        node.colorMid = config.colorMid || "#FFCC00";
-        node.colorLow = config.colorLow || "#FF0000";
+        // Farben
+        node.colorHigh = config.colorHigh;
+        node.colorMid = config.colorMid;
+        node.colorLow = config.colorLow;
 
         const context = node.context();
         node.state = context.get("state") || null;

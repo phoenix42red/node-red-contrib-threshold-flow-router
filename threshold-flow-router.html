@@ -21,36 +21,15 @@ RED.nodes.registerType('threshold-flow-router',{
         debug: {value:false},
         alwaysPass: {value:false},
 
-        colorHigh: {value:"#00AA00"},
-        colorMid: {value:"#FFCC00"},
-        colorLow: {value:"#FF0000"}
+        colorHigh: {value:"#00AA00", required:true},
+        colorMid: {value:"#FFCC00", required:true},
+        colorLow: {value:"#FF0000", required:true}
     },
     inputs:1,
     outputs:3,
     outputLabels:["HIGH","MID","LOW"],
     icon:"font-awesome/fa-random",
-    label: function() { return this.name || "threshold-flow-router"; },
-
-    oneditprepare: function() {
-        // TypedInput für Wert/Grenzen
-        $("#node-input-property").typedInput({default:"msg", types:["msg","flow","global"], typeField:"#node-input-propertyType"});
-        $("#node-input-upper").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-upperType"});
-        $("#node-input-lower").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-lowerType"});
-
-        // Farben auf gespeicherte Config setzen
-        setTimeout(() => { // kleines Delay, damit Node-RED DOM fertig hat
-            $("#node-input-colorHigh").val(this.colorHigh || "#00AA00");
-            $("#node-input-colorMid").val(this.colorMid || "#FFCC00");
-            $("#node-input-colorLow").val(this.colorLow || "#FF0000");
-        }, 0);
-    },
-
-    oneditsave: function() {
-        // Speichern der ausgewählten Farben
-        this.colorHigh = $("#node-input-colorHigh").val();
-        this.colorMid = $("#node-input-colorMid").val();
-        this.colorLow = $("#node-input-colorLow").val();
-    }
+    label: function() { return this.name || "threshold-flow-router"; }
 });
 </script>
 
@@ -58,55 +37,55 @@ RED.nodes.registerType('threshold-flow-router',{
 
 <div class="form-row">
     <label>Name</label>
-    <input type="text" id="node-input-name">
+    <input type="text" data-config-name="name">
 </div>
 
 <div class="form-row">
     <label>Wert</label>
-    <input type="text" id="node-input-property">
-    <input type="hidden" id="node-input-propertyType">
+    <input type="text" data-config-name="property">
+    <input type="hidden" data-config-name="propertyType">
 </div>
 
 <div class="form-row">
     <label>Obere Grenze</label>
-    <input type="text" id="node-input-upper">
-    <input type="hidden" id="node-input-upperType">
+    <input type="text" data-config-name="upper">
+    <input type="hidden" data-config-name="upperType">
 </div>
 
 <div class="form-row">
     <label>Untere Grenze</label>
-    <input type="text" id="node-input-lower">
-    <input type="hidden" id="node-input-lowerType">
+    <input type="text" data-config-name="lower">
+    <input type="hidden" data-config-name="lowerType">
 </div>
 
 <div class="form-row">
     <label>Hysterese</label>
-    <input type="number" id="node-input-hysteresis">
+    <input type="number" data-config-name="hysteresis">
 </div>
 
 <div class="form-row">
     <label>Mindestverweildauer (ms)</label>
-    <input type="number" id="node-input-minDuration">
+    <input type="number" data-config-name="minDuration">
 </div>
 
 <div class="form-row">
-    <input type="checkbox" id="node-input-softStart">
-    <label for="node-input-softStart">Soft-Start</label>
+    <input type="checkbox" data-config-name="softStart">
+    <label>Soft-Start</label>
 </div>
 
 <div class="form-row">
-    <input type="checkbox" id="node-input-debug">
-    <label for="node-input-debug">Debug aktivieren</label>
+    <input type="checkbox" data-config-name="debug">
+    <label>Debug aktivieren</label>
 </div>
 
 <div class="form-row">
-    <input type="checkbox" id="node-input-alwaysPass">
-    <label for="node-input-alwaysPass">Nachricht immer durchreichen</label>
+    <input type="checkbox" data-config-name="alwaysPass">
+    <label>Nachricht immer durchreichen</label>
 </div>
 
 <div class="form-row">
     <label>Farbe HIGH</label>
-    <select id="node-input-colorHigh">
+    <select data-config-name="colorHigh">
         <option value="#00AA00">Grün</option>
         <option value="#FFCC00">Gelb</option>
         <option value="#FF0000">Rot</option>
@@ -117,7 +96,7 @@ RED.nodes.registerType('threshold-flow-router',{
 
 <div class="form-row">
     <label>Farbe MID</label>
-    <select id="node-input-colorMid">
+    <select data-config-name="colorMid">
         <option value="#00AA00">Grün</option>
         <option value="#FFCC00">Gelb</option>
         <option value="#FF0000">Rot</option>
@@ -128,7 +107,7 @@ RED.nodes.registerType('threshold-flow-router',{
 
 <div class="form-row">
     <label>Farbe LOW</label>
-    <select id="node-input-colorLow">
+    <select data-config-name="colorLow">
         <option value="#00AA00">Grün</option>
         <option value="#FFCC00">Gelb</option>
         <option value="#FF0000">Rot</option>
