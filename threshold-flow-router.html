@@ -26,7 +26,6 @@ RED.nodes.registerType('threshold-flow-router',{
     label: function() { return this.name || "threshold-flow-router"; },
 
     oneditprepare: function() {
-        // typedInputs für Property / Upper / Lower
         $("#node-input-property").typedInput({default:"msg", types:["msg","flow","global"], typeField:"#node-input-propertyType"});
         $("#node-input-upper").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-upperType"});
         $("#node-input-lower").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-lowerType"});

@@ -4,7 +4,7 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         const node = this;
 
-        // Konfiguration
+        // ===== Konfiguration =====
         node.property = config.property;
         node.propertyType = config.propertyType;
 
@@ -21,7 +21,7 @@ module.exports = function(RED) {
         node.debug = config.debug;
         node.alwaysPass = config.alwaysPass;
 
-        // Farben
+        // Farben (Hex für Dropdown)
         node.colorHigh = config.colorHigh || "#00AA00";
         node.colorMid  = config.colorMid  || "#FFCC00";
         node.colorLow  = config.colorLow  || "#FF0000";
@@ -55,6 +55,17 @@ module.exports = function(RED) {
             return "MID";
         }
 
+        function mapColor(hex) {
+            switch(hex) {
+                case "#00AA00": return "green";
+                case "#FFCC00": return "yellow";
+                case "#FF0000": return "red";
+                case "#0000FF": return "blue";
+                case "#AAAAAA": return "grey";
+                default: return "grey";
+            }
+        }
+
         function commitState(newState, msg, value, upper, lower) {
             node.state = newState;
             context.set("state", node.state);
@@ -67,9 +78,9 @@ module.exports = function(RED) {
             if (node.alwaysPass && !outputs[1]) outputs[1] = msg;
 
             node.status({
-                fill: node.state === "HIGH" ? node.colorHigh :
-                      node.state === "MID" ? node.colorMid :
-                      node.colorLow,
+                fill: node.state === "HIGH" ? mapColor(node.colorHigh) :
+                      node.state === "MID" ? mapColor(node.colorMid) :
+                      mapColor(node.colorLow),
                 shape: "dot",
                 text: `${node.state} | ${value} (L:${lower} U:${upper})`
             });
