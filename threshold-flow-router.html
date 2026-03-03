@@ -4,23 +4,17 @@ RED.nodes.registerType('threshold-flow-router',{
     color: '#c0deed',
     defaults: {
         name: {value:""},
-
         property: {value:"payload", required:true},
         propertyType: {value:"msg"},
-
         upper: {value:"10", required:true},
         upperType: {value:"num"},
-
         lower: {value:"0", required:true},
         lowerType: {value:"num"},
-
         hysteresis: {value:0},
         minDuration: {value:0},
-
         softStart: {value:true},
         debug: {value:false},
         alwaysPass: {value:false},
-
         colorHigh: {value:"#00AA00", required:true},
         colorMid: {value:"#FFCC00", required:true},
         colorLow: {value:"#FF0000", required:true}
@@ -37,16 +31,29 @@ RED.nodes.registerType('threshold-flow-router',{
         $("#node-input-upper").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-upperType"});
         $("#node-input-lower").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-lowerType"});
 
-        // Farben setzen
-        $("#node-input-colorHigh").val(this.colorHigh);
-        $("#node-input-colorMid").val(this.colorMid);
-        $("#node-input-colorLow").val(this.colorLow);
+        // Farben über typedInput Dropdown
+        const colors = [
+            {value:"#00AA00", label:"Grün"},
+            {value:"#FFCC00", label:"Gelb"},
+            {value:"#FF0000", label:"Rot"},
+            {value:"#0000FF", label:"Blau"},
+            {value:"#AAAAAA", label:"Grau"}
+        ];
+
+        function initColor(id, val) {
+            $("#"+id).typedInput({default: val, types: colors.map(c=>c.value), typeField:"#"+id+"Type"});
+            $("#"+id).typedInput("value", val);
+        }
+
+        initColor("node-input-colorHigh", this.colorHigh);
+        initColor("node-input-colorMid", this.colorMid);
+        initColor("node-input-colorLow", this.colorLow);
     },
 
     oneditsave: function() {
-        this.colorHigh = $("#node-input-colorHigh").val();
-        this.colorMid = $("#node-input-colorMid").val();
-        this.colorLow = $("#node-input-colorLow").val();
+        this.colorHigh = $("#node-input-colorHigh").typedInput("value");
+        this.colorMid = $("#node-input-colorMid").typedInput("value");
+        this.colorLow = $("#node-input-colorLow").typedInput("value");
     }
 });
 </script>
@@ -103,35 +110,20 @@ RED.nodes.registerType('threshold-flow-router',{
 
 <div class="form-row">
     <label>Farbe HIGH</label>
-    <select id="node-input-colorHigh">
-        <option value="#00AA00">Grün</option>
-        <option value="#FFCC00">Gelb</option>
-        <option value="#FF0000">Rot</option>
-        <option value="#0000FF">Blau</option>
-        <option value="#AAAAAA">Grau</option>
-    </select>
+    <input type="text" id="node-input-colorHigh">
+    <input type="hidden" id="node-input-colorHighType">
 </div>
 
 <div class="form-row">
     <label>Farbe MID</label>
-    <select id="node-input-colorMid">
-        <option value="#00AA00">Grün</option>
-        <option value="#FFCC00">Gelb</option>
-        <option value="#FF0000">Rot</option>
-        <option value="#0000FF">Blau</option>
-        <option value="#AAAAAA">Grau</option>
-    </select>
+    <input type="text" id="node-input-colorMid">
+    <input type="hidden" id="node-input-colorMidType">
 </div>
 
 <div class="form-row">
     <label>Farbe LOW</label>
-    <select id="node-input-colorLow">
-        <option value="#00AA00">Grün</option>
-        <option value="#FFCC00">Gelb</option>
-        <option value="#FF0000">Rot</option>
-        <option value="#0000FF">Blau</option>
-        <option value="#AAAAAA">Grau</option>
-    </select>
+    <input type="text" id="node-input-colorLow">
+    <input type="hidden" id="node-input-colorLowType">
 </div>
 
 </script>
