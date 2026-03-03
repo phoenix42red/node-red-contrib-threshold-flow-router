@@ -1,14 +1,24 @@
 {
   "name": "node-red-contrib-threshold-flow-router",
   "version": "1.0.0",
-  "description": "Node-RED node: Routes messages based on thresholds with hysteresis and 3 outputs (HIGH/MID/LOW)",
-  "keywords": ["node-red", "threshold", "hysteresis", "router", "flow"],
+  "description": "Node-RED node to route messages based on thresholds with hysteresis and configurable HIGH/MID/LOW colors",
+  "keywords": [
+    "node-red",
+    "threshold",
+    "router",
+    "hysteresis",
+    "flow"
+  ],
   "node-red": {
     "nodes": {
       "threshold-flow-router": "threshold-flow-router.js"
     }
   },
-  "author": "Dein Name",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phoenix42red/node-red-contrib-threshold-flow-router.git"
+  },
   "license": "MIT",
+  "author": "phoenix42red",
   "dependencies": {}
 }
