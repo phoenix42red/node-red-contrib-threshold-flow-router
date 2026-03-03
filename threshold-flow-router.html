@@ -37,10 +37,12 @@ RED.nodes.registerType('threshold-flow-router',{
         $("#node-input-upper").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-upperType"});
         $("#node-input-lower").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-lowerType"});
 
-        // Dropdowns auf gespeicherte Werte setzen
-        $("#node-input-colorHigh").val(this.colorHigh);
-        $("#node-input-colorMid").val(this.colorMid);
-        $("#node-input-colorLow").val(this.colorLow);
+        // Farben auf gespeicherte Config setzen
+        setTimeout(() => { // kleines Delay, damit Node-RED DOM fertig hat
+            $("#node-input-colorHigh").val(this.colorHigh || "#00AA00");
+            $("#node-input-colorMid").val(this.colorMid || "#FFCC00");
+            $("#node-input-colorLow").val(this.colorLow || "#FF0000");
+        }, 0);
     },
 
     oneditsave: function() {
