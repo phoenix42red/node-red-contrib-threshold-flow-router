@@ -22,9 +22,9 @@ module.exports = function(RED) {
         node.alwaysPass = config.alwaysPass;
 
         // Farben
-        node.colorHigh = config.colorHigh;
-        node.colorMid = config.colorMid;
-        node.colorLow = config.colorLow;
+        node.colorHigh = config.colorHigh || "#00AA00";
+        node.colorMid  = config.colorMid  || "#FFCC00";
+        node.colorLow  = config.colorLow  || "#FF0000";
 
         const context = node.context();
         node.state = context.get("state") || null;
@@ -38,9 +38,7 @@ module.exports = function(RED) {
                 if (type === "msg") return RED.util.getMessageProperty(msg, value);
                 if (type === "flow") return node.context().flow.get(value);
                 if (type === "global") return node.context().global.get(value);
-            } catch(e) {
-                return undefined;
-            }
+            } catch(e) { return undefined; }
         }
 
         function evaluateState(value, upper, lower) {
