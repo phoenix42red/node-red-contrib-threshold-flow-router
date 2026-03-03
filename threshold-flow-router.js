@@ -21,13 +21,17 @@ module.exports = function(RED) {
         node.debug = config.debug;
         node.alwaysPass = config.alwaysPass;
 
-        const context = node.context();
+        // Farben aus Dropdown
+        node.colorHigh = config.colorHigh || "#00AA00";
+        node.colorMid = config.colorMid || "#FFCC00";
+        node.colorLow = config.colorLow || "#FF0000";
 
+        const context = node.context();
         node.state = context.get("state") || null;
         node.timer = null;
         node.pendingState = null;
 
-        // ===== Helper: TypedInput auslesen =====
+        // ===== Helper =====
         function getTypedValue(type, value, msg) {
             try {
                 if (type === "num") return Number(value);
@@ -58,7 +62,6 @@ module.exports = function(RED) {
             context.set("state", node.state);
 
             let outputs = [null, null, null];
-
             if (node.state === "HIGH") outputs[0] = msg;
             if (node.state === "MID") outputs[1] = msg;
             if (node.state === "LOW") outputs[2] = msg;
@@ -66,8 +69,9 @@ module.exports = function(RED) {
             if (node.alwaysPass && !outputs[1]) outputs[1] = msg;
 
             node.status({
-                fill: node.state === "HIGH" ? "red" :
-                      node.state === "LOW" ? "blue" : "green",
+                fill: node.state === "HIGH" ? node.colorHigh :
+                      node.state === "MID" ? node.colorMid :
+                      node.colorLow,
                 shape: "dot",
                 text: `${node.state} | ${value} (L:${lower} U:${upper})`
             });
@@ -107,30 +111,24 @@ module.exports = function(RED) {
                 return;
             }
 
-            // Soft-Start
             if (node.softStart && node.state === null) {
-                const initialState = evaluateState(value, upper, lower);
-                commitState(initialState, msg, value, upper, lower);
+                commitState(evaluateState(value, upper, lower), msg, value, upper, lower);
                 return;
             }
 
             const newState = evaluateState(value, upper, lower);
 
             if (newState !== node.state) {
-
                 if (node.minDuration > 0) {
                     clearTimeout(node.timer);
                     node.pendingState = newState;
-
                     node.timer = setTimeout(() => {
                         commitState(node.pendingState, msg, value, upper, lower);
                         node.pendingState = null;
                     }, node.minDuration);
-
                 } else {
                     commitState(newState, msg, value, upper, lower);
                 }
-
             } else {
                 if (node.alwaysPass) node.send([null, msg, null]);
             }
