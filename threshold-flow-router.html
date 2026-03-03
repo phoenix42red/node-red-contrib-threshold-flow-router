@@ -30,10 +30,24 @@ RED.nodes.registerType('threshold-flow-router',{
     outputLabels:["HIGH","MID","LOW"],
     icon:"font-awesome/fa-random",
     label: function() { return this.name || "threshold-flow-router"; },
+
     oneditprepare: function() {
+        // TypedInput für Wert/Grenzen
         $("#node-input-property").typedInput({default:"msg", types:["msg","flow","global"], typeField:"#node-input-propertyType"});
         $("#node-input-upper").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-upperType"});
         $("#node-input-lower").typedInput({default:"num", types:["num","msg","flow","global"], typeField:"#node-input-lowerType"});
+
+        // Dropdowns auf gespeicherte Werte setzen
+        $("#node-input-colorHigh").val(this.colorHigh);
+        $("#node-input-colorMid").val(this.colorMid);
+        $("#node-input-colorLow").val(this.colorLow);
+    },
+
+    oneditsave: function() {
+        // Speichern der ausgewählten Farben
+        this.colorHigh = $("#node-input-colorHigh").val();
+        this.colorMid = $("#node-input-colorMid").val();
+        this.colorLow = $("#node-input-colorLow").val();
     }
 });
 </script>
