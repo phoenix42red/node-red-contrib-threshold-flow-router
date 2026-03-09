@@ -137,7 +137,7 @@ module.exports = function(RED) {
                     commitState(newState, msg, value, upper, lower);
                 }
             } else {
-                if (node.alwaysPass) {
+                if (node.passThrough) {
                     let outputs = [null, null, null];
                     if (node.state === "HIGH") outputs[0] = msg;
                     if (node.state === "MID")  outputs[1] = msg;
@@ -151,4 +151,5 @@ module.exports = function(RED) {
     RED.nodes.registerType("threshold-flow-router", ThresholdFlowRouterNode);
 
 }
+
 
