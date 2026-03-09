@@ -71,11 +71,10 @@ module.exports = function(RED) {
             context.set("state", node.state);
 
             let outputs = [null, null, null];
+
             if (node.state === "HIGH") outputs[0] = msg;
             if (node.state === "MID")  outputs[1] = msg;
             if (node.state === "LOW")  outputs[2] = msg;
-
-            if (node.alwaysPass && !outputs[1]) outputs[1] = msg;
 
             node.status({
                 fill: node.state === "HIGH" ? mapColor(node.colorHigh) :
@@ -138,10 +137,17 @@ module.exports = function(RED) {
                     commitState(newState, msg, value, upper, lower);
                 }
             } else {
-                if (node.alwaysPass) node.send([null, msg, null]);
+                if (node.alwaysPass) {
+                    let outputs = [null, null, null];
+                    if (node.state === "HIGH") outputs[0] = msg;
+                    if (node.state === "MID")  outputs[1] = msg;
+                    if (node.state === "LOW")  outputs[2] = msg;
+                    node.send(outputs);
+                }
             }
         });
     }
 
     RED.nodes.registerType("threshold-flow-router", ThresholdFlowRouterNode);
+
 }
