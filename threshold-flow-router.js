@@ -19,7 +19,7 @@ module.exports = function(RED) {
 
         node.softStart = config.softStart;
         node.debug = config.debug;
-        node.alwaysPass = config.alwaysPass;
+        node.passThrough = config.passThrough;
 
         // Farben (Hex für Dropdown)
         node.colorHigh = config.colorHigh || "#00AA00";
@@ -151,3 +151,4 @@ module.exports = function(RED) {
     RED.nodes.registerType("threshold-flow-router", ThresholdFlowRouterNode);
 
 }
+
