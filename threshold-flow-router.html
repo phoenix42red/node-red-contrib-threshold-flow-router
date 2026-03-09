@@ -14,7 +14,7 @@ RED.nodes.registerType('threshold-flow-router',{
         minDuration: {value:0},
         softStart: {value:true},
         debug: {value:false},
-        alwaysPass: {value:false},
+        passThrough: { value:false },
         colorHigh: {value:"#00AA00", required:true},
         colorMid: {value:"#FFCC00", required:true},
         colorLow: {value:"#FF0000", required:true}
@@ -90,8 +90,10 @@ RED.nodes.registerType('threshold-flow-router',{
 </div>
 
 <div class="form-row">
-    <input type="checkbox" id="node-input-alwaysPass">
-    <label>Nachricht immer durchreichen</label>
+    <label for="node-input-passThrough">
+        <i class="fa fa-random"></i> Nachrichten immer durchreichen
+    </label>
+    <input type="checkbox" id="node-input-passThrough">
 </div>
 
 <div class="form-row">
@@ -126,5 +128,6 @@ RED.nodes.registerType('threshold-flow-router',{
         <option value="#AAAAAA">Grau</option>
     </select>
 </div>
+
 
 </script>
